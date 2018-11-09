@@ -22,12 +22,14 @@ def generate_shape(width, height):
             'error': e.args,
             'message': 'Mininum height/width should be > 200 for pattern to work.'
         })
+        status_code = 400
     else:
         response_json = json.dumps({'plotMe': points})
+        status_code = 200
 
     return Response(
         response=response_json,
-        status=200,
+        status=status_code,
         content_type='application/json'
     )
 
