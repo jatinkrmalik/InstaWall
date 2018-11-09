@@ -11,7 +11,11 @@ def hello_world():
 @app.route('/generate')
 def generate_default():
     points = LowPolyGenerator(center_cords=(1920//2,1080//2)).generate()
-    return json.dumps(points)
+    return Response(
+        response=json.dumps({'plotMe': points}),
+        status=200,
+        content_type='application/json'
+    )
 
 @app.route('/generate/<int:width>/<int:height>')
 def generate_shape(width, height):
