@@ -2,7 +2,7 @@ import json
 
 from flask import Flask, Response
 from flask_cors import CORS
-
+import random
 from models import LowPolyGenerator
 
 app = Flask(__name__)
@@ -22,8 +22,10 @@ def generate_default():
 @app.route('/generate/<int:width>/<int:height>')
 def generate_shape(width, height):
     try:
+        w  = width//random.randint(1,4)
+        h  = height//random.randint(1,4)
         points = LowPolyGenerator(
-            center_cords=(width//2, height//2)).generate()
+            center_cords=(w, h)).generate()
     except ValueError as e:
         response_json = json.dumps({
             'error': e.args,
