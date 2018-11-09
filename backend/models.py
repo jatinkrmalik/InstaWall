@@ -37,3 +37,11 @@ class HorizontalLineGenerator(ShapeGenerator):
                 ]
             )
         return ['line', line_list]
+
+class WaveGenerator(ShapeGenerator):
+    def __init__(self, dimensions):
+        super().__init__(dimensions)
+
+    def generate(self):
+        # do magic here
+        pass 
