@@ -3,17 +3,23 @@ import json
 from flask import Flask, Response
 from flask_cors import CORS
 import random
-from models import LowPolyGenerator
+from models import LowPolyGenerator, HorizontalLineGenerator
 
 app = Flask(__name__)
 CORS(app)
 
+klass_list = [LowPolyGenerator, HorizontalLineGenerator]
 
 @app.route('/generate')
 def generate_default():
-    points = LowPolyGenerator(center_cords=(1920//2, 1080//2)).generate()
+    klass = random.choice(klass_list)
+    shape_type, shape_points = klass(
+        dimensions=(1920, 1080)).generate()
     return Response(
-        response=json.dumps({'plotMe': points}),
+        response=json.dumps({
+            'type': shape_type,
+            'plotMe':  shape_points
+        }),
         status=200,
         content_type='application/json'
     )
@@ -22,10 +28,9 @@ def generate_default():
 @app.route('/generate/<int:width>/<int:height>')
 def generate_shape(width, height):
     try:
-        w  = width//random.randint(1,4)
-        h  = height//random.randint(1,4)
-        points = LowPolyGenerator(
-            center_cords=(w, h)).generate()
+        klass = random.choice(klass_list)
+        shape_type, shape_points = klass(
+            dimensions=(width, height)).generate()
     except ValueError as e:
         response_json = json.dumps({
             'error': e.args,
@@ -33,7 +38,10 @@ def generate_shape(width, height):
         })
         status_code = 400
     else:
-        response_json = json.dumps({'plotMe': points})
+        response_json = json.dumps({
+            'type': shape_type,
+            'plotMe': shape_points
+        })
         status_code = 200
 
     return Response(

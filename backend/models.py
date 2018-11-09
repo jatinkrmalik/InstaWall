@@ -1,16 +1,40 @@
 from utils.generatePolygon import generatePolygon
+import random
+
 
 class ShapeGenerator:
-    def __init__(self, center_cords):
-        self.center_cords = center_cords
+    def __init__(self, dimensions):
+        self.dimensions = dimensions
 
     def generate(self):
         raise NotImplementedError()
 
 
 class LowPolyGenerator(ShapeGenerator):
-    def __init__(self, center_cords):
-        super().__init__(center_cords)
+    def __init__(self, dimensions):
+        super().__init__(dimensions)
 
     def generate(self):
-        return generatePolygon(ctrX=self.center_cords[0], ctrY=self.center_cords[1])
+        x, y = 0, 0
+        while x <= 200 and y <= 200:
+            x = self.dimensions[0]//random.randint(1, 4)
+            y = self.dimensions[1]//random.randint(1, 4)
+        return ['polygon', generatePolygon(ctrX=x, ctrY=y)]
+
+
+class HorizontalLineGenerator(ShapeGenerator):
+    def __init__(self, dimensions):
+        super().__init__(dimensions)
+
+    def generate(self):
+        line_list = []
+        for y in range(self.dimensions[1]//2):
+            if round(random.random()):
+                line_list.append(
+                    [
+                        (random.randint(0, self.dimensions[0]), y),
+                        (random.randint(0, self.dimensions[0]), random.randint(
+                            y, self.dimensions[1]))
+                    ]
+                )
+        return ['line', line_list]
