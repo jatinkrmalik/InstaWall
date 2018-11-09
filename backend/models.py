@@ -28,7 +28,7 @@ class HorizontalLineGenerator(ShapeGenerator):
 
     def generate(self):
         line_list = []
-        itr = random.randint(50,150)
+        itr = random.randint(5,60)
         for y in range(itr):
             line_list.append(
                 [
