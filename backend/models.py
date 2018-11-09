@@ -32,7 +32,7 @@ class HorizontalLineGenerator(ShapeGenerator):
         for y in range(itr):
             line_list.append(
                 [
-                    (random.randint(0, self.dimensions[0]), random.randint(y, itr)),
+                    (random.randint(0, self.dimensions[0]), random.randint(y, self.dimensions[1])),
                     (random.randint(0, self.dimensions[0]), random.randint(
                         itr, self.dimensions[1]))
                 ]
