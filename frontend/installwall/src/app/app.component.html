@@ -1,0 +1,24 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center; display: flex; align-items: center">
+  <h1 style="color: white">
+    Welcome to {{ title }}!
+  </h1>
+  <div class="setup-container">
+    <button style="background: transparent; color: white" (click)="getPatterns()">Make It</button>
+  </div>
+  <div class="setup-container">
+    <button style="background: transparent; color: white" (click)="getColors()">Mix It</button>
+  </div>
+</div>
+<div class="container">
+  <div class="svg-container">
+    <svg [attr.width.px]="screenWidth" [attr.height.px]="screenHeight">
+      <polygon *ngIf="type === 'polygon'" [attr.points]="polyPoints" [attr.fill]="randomColor" [attr.stroke]="randomStroke" style="stroke-width:1;fill-rule:evenodd"
+      />
+      <g *ngIf="type === 'line'">
+        <line *ngFor="let line of response.plotMe" [attr.x1]="line[0][0]" [attr.y1]="line[0][1]" [attr.x2]="line[1][0]" [attr.y2]="line[1][1]"
+          [attr.stroke]="getHexCodes()" [attr.stroke-width]="randomStrokeWidth" />
+      </g>
+    </svg>
+  </div>
+</div>
