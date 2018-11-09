@@ -10,6 +10,7 @@ CORS(app)
 
 klass_list = [LowPolyGenerator, HorizontalLineGenerator]
 
+
 @app.route('/generate')
 def generate_default():
     klass = random.choice(klass_list)
